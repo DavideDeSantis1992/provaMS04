@@ -21,9 +21,7 @@ public class DestinatarioMail {
         this.idGruppoNotifica = idGruppoNotifica;
     }
 
-    public DestinatarioMail(String email) {
-        this.email = email;
-    }
+
 
     public DestinatarioMail(){}
     public Long getIdDestinatario() {
@@ -57,7 +55,7 @@ public class DestinatarioMail {
     public void setIdGruppoNotifica(GruppoNotifica idGruppoNotifica) {
         this.idGruppoNotifica = idGruppoNotifica;
     }
-/*
+
     @Override
     public String toString() {
         return "DestinatarioMail{" +
@@ -68,12 +66,4 @@ public class DestinatarioMail {
                 '}';
     }
 
- */
-
-    @Override
-    public String toString() {
-        return "DestinatarioMail{" +
-                "email='" + email + '\'' +
-                '}';
-    }
 }

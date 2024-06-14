@@ -2,35 +2,27 @@ package com.example.MS4.model;
 
 import javax.persistence.*;
 
-@Entity
-@Table
-public class ProvaChiamata {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+
+
+public class ChiamataPostman {
+
     private String idIstanzaProcesso;
     private String stato;
     private String tipo;
     private String frequenza;
 
 
-    public ProvaChiamata(Long id, String idIstanzaProcesso, String stato, String tipo, String frequenza) {
-        this.id = id;
+    public ChiamataPostman(String idIstanzaProcesso, String stato, String tipo, String frequenza) {
+
         this.idIstanzaProcesso = idIstanzaProcesso;
         this.stato = stato;
         this.tipo = tipo;
         this.frequenza = frequenza;
     }
 
-    public ProvaChiamata() {}
+    public ChiamataPostman() {}
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getIdIstanzaProcesso() {
         return idIstanzaProcesso;

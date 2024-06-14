@@ -6,4 +6,13 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GruppoNotificaRepository extends JpaRepository<GruppoNotifica, Long> {
+    GruppoNotifica findByIdGruppoNotifica(Long idGruppoNotifica);
+
+
+
+
+
+
+
+
 }

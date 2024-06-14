@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScans;
 
 @SpringBootApplication
 //@EnableEurekaClient
-@ComponentScan({"com.example.MS4.controller", "com.example.MS4.model", "com.example.MS4.repository", "com.example.MS4.client","com.example.MS4.configurations"})
+//@ComponentScan({"com.example.MS4.controller", "com.example.MS4.model", "com.example.MS4.repository", "com.example.MS4.client","com.example.MS4.configurations"})
 public class Ms4Application {
 
 	public static void main(String[] args) {
