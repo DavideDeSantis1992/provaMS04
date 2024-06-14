@@ -11,15 +11,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmailCorpoServiceImpl implements EmailCorpoService {
-
     @Autowired
     private EmailCorpoRepository emailCorpoRepository;
-
     @Autowired
     private GruppoNotificaRepository gruppoNotificaRepository;
-
-
-
     @Override
     public EmailCorpo elaborazione(ChiamataPostman chiamataPostman) {
 
@@ -27,7 +22,6 @@ public class EmailCorpoServiceImpl implements EmailCorpoService {
         String stato = chiamataPostman.getStato().toLowerCase();
         String tipo = chiamataPostman.getTipo().toLowerCase();
         String frequenza = chiamataPostman.getFrequenza().toLowerCase();
-
         Long gruppo = null;
 
         if (tipo.equals("malattia") && frequenza.equals("mensile")) {
@@ -41,23 +35,14 @@ public class EmailCorpoServiceImpl implements EmailCorpoService {
         }
 
         GruppoNotifica gruppoNotifica = gruppoNotificaRepository.findByIdGruppoNotifica(gruppo);
-
-
         EmailCorpo nuovoCorpoEmail = new EmailCorpo();
-
         nuovoCorpoEmail.setBodyEmail("E' stata inviata una notifica al gruppo "
                 + gruppo + " per l'istanza: " + idIstanzaProcesso +
                 ", con stato: " + stato + ", tipo: " + tipo
                 + ", frequenza: " + frequenza);
 
         nuovoCorpoEmail.setIdGruppoNotifica(gruppoNotifica);
-
-
-
-
         emailCorpoRepository.save(nuovoCorpoEmail);
-        System.out.println(nuovoCorpoEmail);
-
         return nuovoCorpoEmail;
     }
 }
