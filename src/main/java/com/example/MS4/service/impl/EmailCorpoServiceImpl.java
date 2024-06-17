@@ -26,7 +26,7 @@ public class EmailCorpoServiceImpl implements EmailCorpoService {
 
         if (tipo.equals("malattia") && frequenza.equals("mensile")) {
             gruppo =1L;
-        } else if (tipo.equals("malattia") && frequenza.equals("trimestrale")) {
+        } else if (tipo.equals("malattia") && frequenza.equals("semestrale")) {
             gruppo = 2L;
         } else if (tipo.equals("infortunio") && frequenza.equals("mensile")) {
             gruppo = 3L;
