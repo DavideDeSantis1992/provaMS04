@@ -4,26 +4,26 @@ import javax.persistence.*;
 
 @Entity
 @Table
-public class DestinatarioMail {
+public class Destinatario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idDestinatario;
     private String email;
     private Boolean flagCc;
     @ManyToOne
-    @JoinColumn(name = "idGruppoNotifica")
-    private GruppoNotifica idGruppoNotifica;
+    @JoinColumn(name = "idGruppo")
+    private Gruppo idGruppo;
 
-    public DestinatarioMail(Long idDestinatario, String email, Boolean flagCc, GruppoNotifica idGruppoNotifica) {
+    public Destinatario(Long idDestinatario, String email, Boolean flagCc, Gruppo idGruppo) {
         this.idDestinatario = idDestinatario;
         this.email = email;
         this.flagCc = flagCc;
-        this.idGruppoNotifica = idGruppoNotifica;
+        this.idGruppo = idGruppo;
     }
 
 
 
-    public DestinatarioMail(){}
+    public Destinatario(){}
     public Long getIdDestinatario() {
         return idDestinatario;
     }
@@ -48,12 +48,12 @@ public class DestinatarioMail {
         this.flagCc = flagCc;
     }
 
-    public GruppoNotifica getIdGruppoNotifica() {
-        return idGruppoNotifica;
+    public Gruppo getIdGruppo() {
+        return idGruppo;
     }
 
-    public void setIdGruppoNotifica(GruppoNotifica idGruppoNotifica) {
-        this.idGruppoNotifica = idGruppoNotifica;
+    public void setIdGruppo(Gruppo idGruppo) {
+        this.idGruppo = idGruppo;
     }
 
     @Override
@@ -62,7 +62,7 @@ public class DestinatarioMail {
                 "idDestinatario=" + idDestinatario +
                 ", email='" + email + '\'' +
                 ", flagCc=" + flagCc +
-                ", idGruppoNotifica=" + idGruppoNotifica +
+                ", idGruppo=" + idGruppo +
                 '}';
     }
 

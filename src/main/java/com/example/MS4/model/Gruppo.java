@@ -4,33 +4,33 @@ import javax.persistence.*;
 
 @Entity
 @Table
-public class GruppoNotifica {
+public class Gruppo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idGruppoNotifica;
+    private Long idGruppo;
     private String descrizione;
 
     @Override
     public String toString() {
         return "GruppoNotifica{" +
-                "idGruppoNotifica=" + idGruppoNotifica +
+                "idGruppoNotifica=" + idGruppo +
                 ", descrizione='" + descrizione + '\'' +
                 '}';
     }
 
-    public GruppoNotifica(Long idGruppoNotifica, String descrizione) {
-        this.idGruppoNotifica = idGruppoNotifica;
+    public Gruppo(Long idGruppo, String descrizione) {
+        this.idGruppo= idGruppo;
         this.descrizione = descrizione;
     }
-    public GruppoNotifica(){}
+    public Gruppo(){}
 
 
-    public Long getIdGruppoNotifica() {
-        return idGruppoNotifica;
+    public Long getIdGruppo() {
+        return idGruppo;
     }
 
-    public void setIdGruppoNotifica(Long idGruppoNotifica) {
-        this.idGruppoNotifica = idGruppoNotifica;
+    public void setIdGruppo(Long idGruppo) {
+        this.idGruppo = idGruppo;
     }
 
 

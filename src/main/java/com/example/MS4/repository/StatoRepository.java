@@ -1,9 +1,9 @@
 package com.example.MS4.repository;
 
-import com.example.MS4.model.DestinatarioMail;
+import com.example.MS4.model.Stato;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DestinatarioMailRepository extends JpaRepository<DestinatarioMail, Long> {
+public interface StatoRepository extends JpaRepository<Stato, Long> {
 }
