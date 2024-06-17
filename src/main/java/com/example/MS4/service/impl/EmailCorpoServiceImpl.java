@@ -40,6 +40,7 @@ public class EmailCorpoServiceImpl implements EmailCorpoService {
                 + gruppo + " per l'istanza: " + idIstanzaProcesso +
                 ", con stato: " + stato + ", tipo: " + tipo
                 + ", frequenza: " + frequenza);
+        System.out.println(nuovoCorpoEmail.getBodyEmail().toString());
 
         nuovoCorpoEmail.setIdGruppoNotifica(gruppoNotifica);
         emailCorpoRepository.save(nuovoCorpoEmail);
