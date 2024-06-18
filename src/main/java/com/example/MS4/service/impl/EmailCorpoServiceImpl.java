@@ -32,17 +32,12 @@ public class EmailCorpoServiceImpl implements EmailCorpoService {
         String stato = chiamataPostman.getStato().toLowerCase();
         String tipo = chiamataPostman.getTipo().toLowerCase();
         String frequenza = chiamataPostman.getFrequenza().toLowerCase();
-        Long gruppo = null;
 
-        if (tipo.equals("malattia") && frequenza.equals("mensile")) {
-            gruppo =1L;
-        } else if (tipo.equals("malattia") && frequenza.equals("semestrale")) {
-            gruppo = 2L;
-        } else if (tipo.equals("infortunio") && frequenza.equals("mensile")) {
-            gruppo = 3L;
-        } else if (tipo.equals("infortunio") && frequenza.equals("semestrale")) {
-            gruppo = 4L;
-        }
+        String parametro = tipo+" "+frequenza;
+
+        GruppoNotifica gruppoNotificaFind = gruppoNotificaRepository.findByDescrizione(parametro);
+        Long gruppo = gruppoNotificaFind.getIdGruppoNotifica();
+
 
         GruppoNotifica gruppoNotifica = gruppoNotificaRepository.findByIdGruppoNotifica(gruppo);
         EmailCorpo nuovoCorpoEmail = new EmailCorpo();
@@ -54,8 +49,7 @@ public class EmailCorpoServiceImpl implements EmailCorpoService {
 
         nuovoCorpoEmail.setIdGruppoNotifica(gruppoNotifica);
         emailCorpoRepository.save(nuovoCorpoEmail);
-        // in String[] to, devi mettere tutte le email (chiamate email come attributo della classe)
-        // situate nella classe DestinatarioMail che hanno idGruppoNotifica == gruppo e dove hanno il flagCc ==0
+
         GruppoNotifica gruppoNotificaDestinatari = gruppoNotificaRepository.findById(gruppo).orElse(null);
         List<DestinatarioMail> destinatariPrincipali = destinatarioMailRepository.findByIdGruppoNotificaAndFlagCc(gruppoNotificaDestinatari, false);
 
@@ -63,18 +57,13 @@ public class EmailCorpoServiceImpl implements EmailCorpoService {
                 .map(DestinatarioMail::getEmail)
                 .toArray(String[]::new);
 
-        // Recupera i destinatari in copia (flagCc == 1)
+
         GruppoNotifica gruppoNotificaDestinatariCc = gruppoNotificaRepository.findById(gruppo).orElse(null);
         List<DestinatarioMail> destinatariCc = destinatarioMailRepository.findByIdGruppoNotificaAndFlagCc(gruppoNotificaDestinatariCc, true);
 
         String[] cc = destinatariCc.stream()
                 .map(DestinatarioMail::getEmail)
                 .toArray(String[]::new);
-
-
-
-
-
 
         String oggetto = "Notifica di completamento processo con esito: "+stato
                 ;

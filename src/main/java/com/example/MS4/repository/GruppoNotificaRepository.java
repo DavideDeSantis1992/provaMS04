@@ -10,7 +10,7 @@ public interface GruppoNotificaRepository extends JpaRepository<GruppoNotifica, 
 
 
 
-
+    GruppoNotifica findByDescrizione(String descrizione);
 
 
 
