@@ -24,11 +24,13 @@ public class EmailCorpoServiceImpl implements EmailCorpoService {
     private DestinatarioMailRepository destinatarioMailRepository;
     @Override
     public EmailCorpo elaborazione(ChiamataPostman chiamataPostman) {
+
         String idIstanzaProcesso = chiamataPostman.getIdIstanzaProcesso();
         String stato = chiamataPostman.getStato().toLowerCase();
         String tipo = chiamataPostman.getTipo().toLowerCase();
         String frequenza = chiamataPostman.getFrequenza().toLowerCase();
         String parametro = tipo+" "+frequenza;
+
         GruppoNotifica gruppoNotificaFind = gruppoNotificaRepository.findByDescrizione(parametro);
         Long gruppo = gruppoNotificaFind.getIdGruppoNotifica();
         GruppoNotifica gruppoNotifica = gruppoNotificaRepository.findByIdGruppoNotifica(gruppo);
@@ -38,6 +40,7 @@ public class EmailCorpoServiceImpl implements EmailCorpoService {
                 ", con stato: " + stato + ", tipo: " + tipo
                 + ", frequenza: " + frequenza);
         System.out.println(nuovoCorpoEmail.getBodyEmail().toString());
+
         nuovoCorpoEmail.setIdGruppoNotifica(gruppoNotifica);
         GruppoNotifica gruppoNotificaDestinatari = gruppoNotificaRepository.findById(gruppo).orElse(null);
         List<DestinatarioMail> destinatariPrincipali = destinatarioMailRepository.findByIdGruppoNotificaAndFlagCc(gruppoNotificaDestinatari, false);
@@ -49,8 +52,8 @@ public class EmailCorpoServiceImpl implements EmailCorpoService {
         String[] cc = destinatariCc.stream()
                 .map(DestinatarioMail::getEmail)
                 .toArray(String[]::new);
-        String oggetto = "Notifica di completamento processo con esito: "+stato
-                ;
+
+        String oggetto = "Notifica di completamento processo con esito: "+stato;
         String corpo = nuovoCorpoEmail.getBodyEmail().toString();
         System.out.println("IN NOTIFICA");
         try {
@@ -64,6 +67,7 @@ public class EmailCorpoServiceImpl implements EmailCorpoService {
         } catch (Exception e) {
             System.err.println("Errore durante l'invio dell'email o il salvataggio dell'oggetto: " + e.getMessage());
         }
+
         return nuovoCorpoEmail;
     }
     private void sendSimpleEmail(String[] to, String[] cc, String oggetto, String corpo) {
