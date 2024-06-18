@@ -96,7 +96,7 @@ public class EmailCorpoServiceImpl implements EmailCorpoService {
         try {
             javaMailSender.send(message);
             System.out.println("Email inviata con successo a "
-                    + String.join(", ", to) + String.join(", ", cc));
+                    + String.join(", ", to) +" "+ String.join(", ", cc));
         } catch (Exception e) {
             System.err.println("Errore durante l'invio dell'email: " + e.getMessage());
         }
