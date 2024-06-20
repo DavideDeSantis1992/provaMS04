@@ -1,10 +1,10 @@
-package com.example.MS4;
+package com.example.geodNotifApp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Ms4ApplicationTests {
+class MainMSTests {
 
 	@Test
 	void contextLoads() {
