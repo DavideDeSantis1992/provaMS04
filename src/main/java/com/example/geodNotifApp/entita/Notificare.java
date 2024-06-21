@@ -1,11 +1,6 @@
-package com.example.geodNotifApp.dto;
+package com.example.geodNotifApp.entita;
 
-import com.example.geodNotifApp.entita.Frequenza;
-import com.example.geodNotifApp.entita.StatoArtifact;
-import com.example.geodNotifApp.entita.StatoNotifica;
-import com.example.geodNotifApp.entita.Tipo;
-
-public class NotificareDTO {
+public class Notificare {
     private String idIstanzaProcesso;
     private Tipo idTipoCd;
     private Frequenza idFrequenzaCd;;
@@ -43,6 +38,4 @@ public class NotificareDTO {
     public void setIdStatoNotifica(StatoNotifica idStatoNotifica) {
         this.idStatoNotifica = idStatoNotifica;
     }
-
-
 }

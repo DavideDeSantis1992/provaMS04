@@ -1,9 +1,10 @@
 package com.example.geodNotifApp.serviceImpl;
 
-import com.example.geodNotifApp.dto.DestinatariDTO;
-import com.example.geodNotifApp.dto.NotificareDTO;
-import com.example.geodNotifApp.service.GeodNotifAppService;
+import com.example.geodNotifApp.entita.Email;
+import com.example.geodNotifApp.entita.Notificare;
+import com.example.geodNotifApp.service.NotificareService;
 import com.example.geodNotifApp.webClient.GeodDatiAppClient;
+import com.example.geodNotifApp.webClient.SmtpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class GeodNotifAppServiceImpl implements GeodNotifAppService {
+public class NotificareServiceImpl implements NotificareService {
 
     @Value("${bodyEmailSuccesso}")
     private String bodyEmailSuccesso;
@@ -41,24 +42,32 @@ public class GeodNotifAppServiceImpl implements GeodNotifAppService {
     @Value("${gruppo4}")
     private List<String> gruppo4;
 
-    private Logger logger = LoggerFactory.getLogger(GeodNotifAppServiceImpl.class);
+    private Logger logger = LoggerFactory.getLogger(NotificareServiceImpl.class);
 
     @Autowired
     private GeodDatiAppClient geodDatiAppClient;
+    @Autowired
+    private SmtpClient smtpClient;
 
     private void listaProcessiDaElaborare() {
         try {
             logger.info("INIZIO PROCESSO----");
-            List<NotificareDTO> lista = geodDatiAppClient.listaProcessi();
+            //logger.info(bodyEmailSuccesso2);
+            List<Notificare> lista = geodDatiAppClient.listaProcessi();
             logger.info("ho preso la lista dei processi per elaborarla: " + lista);
 
-            for (NotificareDTO notificareDTO : lista) {
-                String artifact = notificareDTO.getIdIstanzaProcesso();
-                String frequenza = notificareDTO.getIdFrequenzaCd().getDescrizione().toLowerCase();
-                String tipo = notificareDTO.getIdTipoCd().getDescrizione().toLowerCase();
+            for (Notificare not : lista) {
+                String artifact = not.getIdIstanzaProcesso();
+                String frequenza = not.getIdFrequenzaCd().getDescrizione().toLowerCase();
+                String tipo = not.getIdTipoCd().getDescrizione().toLowerCase();
                 logger.info("artifact: " + artifact);
                 logger.info("frequenza: " + frequenza);
                 logger.info("tipo: " + tipo);
+
+                String oggettoEmail = oggettoEmailSuccesso;
+
+                String bodyEmail = bodyEmailSuccesso+ ", abbiamo notificato il completamento del processo " + artifact +
+                        " con frequenza " + frequenza + " e tipo " + tipo;
 
                 List<String> destinatari = new ArrayList<>();
                 switch (frequenza) {
@@ -83,18 +92,19 @@ public class GeodNotifAppServiceImpl implements GeodNotifAppService {
                         }
                         break;
                 }
-
-                String oggettoEmail = oggettoEmailSuccesso;
-                String bodyEmail = bodyEmailSuccesso + ", abbiamo notificato il completamento del processo " + artifact +
-                        " con frequenza " + frequenza + " e tipo " + tipo;
-
-                logger.info("BodyEmail: " + bodyEmail);
-                logger.info("oggettoEmail: " + oggettoEmail);
                 logger.info("destinatari: " + destinatari);
+                Email email = new Email(destinatari, oggettoEmail, bodyEmail);
+
+                smtpClient.sendEmail(email);
+
+                logger.info("email: " + email.toString());
+
                 logger.info("PROCESSO TERMINATO----");
+
             }
         } catch (Exception err) {
             logger.error("chiamata client fallita", err);
+
         }
     }
 
